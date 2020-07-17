@@ -1,0 +1,59 @@
+[
+  {
+    "name": "Learn NodeJS",
+    "topics": [
+      "Installation",
+      "Node.js Basics and Syntax",
+      "File System and Event Emitters",
+      "Build HTTP server",
+      "Making HTTP requests",
+      "Make an HTTP POST using axios",
+      "Get HTTP request body data",
+      "File System in nodejs",
+      "More about files in nodejs",
+      "Reading and Writing file in nodejs"
+    ]
+  },
+  {
+    "name": "Learn ExpressJS",
+    "topics": [
+      "Overview of Express",
+      "Express Installation",
+      "Working in Express",
+      "First Program with Express",
+      "Routing in Express",
+      "Route Paths (Dynamic Routing)",
+      "Middleware",
+      "Sessions in Express",
+      "Image upload using multer",
+      "Image upload using base64",
+      "Connecting Express to mysql",
+      "Connecting Express to Oracle",
+      ""
+    ]
+  },
+  {
+    "name": "Learn ReactJS",
+    "topics": [
+      "introduction",
+      "installation",
+      "Stateful and stateless"
+    ]
+  },
+  {
+    "name":"MongoDB with Nodejs",
+    "topics": [
+      "Install MongoDB Driver",
+      "Creating a Database",
+      "Creating a Collection",
+      "Insert Into Collection",
+      "Find Record in Database",
+      "Filter the Result",
+      "Sort the Result",
+      "Delete and Drop",
+      "Update in MongoDB",
+      "Limit the Result",
+      "Join Collections"
+    ]
+  }
+]

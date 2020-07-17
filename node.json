@@ -1,0 +1,105 @@
+[
+  {
+    "Installation": [
+      "One Step Installation",
+      "First, let’s go to http://nodejs.org and download a one-click installer for your OS\nThe installers come with NPM (Node Package Manager)— an important tool for managing dependencies.\nIf there’s no installer for your OS (page http://nodejs.org/download/), you can get the source code and compile it yourself.\n\n**Please ensure that you set the environment variable for nodejs**",
+      "Checking the Installation",
+      "To test your installation, run the following commands in your Terminal app (command line cmd.exe in Windows):\n\n$ node -v\n$ npm -v"
+    ],
+    "Node.js Basics and Syntax": [
+      "Node.js Console",
+      "Like most platforms/languages (e.g., Java, Python, Ruby, and PHP), Node.js comes with a virtual environment: REPL.Using this shell program, we can execute pretty much any Node.js/JavaScript code. It’s even possible to include modules and work with the file system! Other REPL use cases involve controlling nodecopters (http://nodecopter.com/)\nand debugging remote servers \nTo start the console, run the following command in your terminal:\n $ node\n> 1+1\n> \"Hello\"+\" \"+\"World\"\n> a=1;b=2;a+b\n> 17+29/2*7\n> f = function(x) {return x*2}\n> f(b)",
+      "Launching Node.js Scripts",
+      "To start a Node.js script from a file, simply run $ node filename—for example, $ node program.js. If all we need is\na quick set of statements, there’s a -e option that allows us to run inline JavaScript/Node.js—for example, $ node -e\n\"console.log(new Date());\".",
+      "Accessing Global Scope in Node.js",
+      "As you know, browser JavaScript, by default, puts everything into its global scope. On the other hand, Node.js was designed to behave differently, with everything being local by default. In case we need to access globals, there is a global object. And, when we need to export something, we should do so explicitly.\nIn a sense, the window object from front-end/browser JavaScript metamorphosed into a combination of global and process objects. Needless to say, the document object, which represents the DOM (Document Object Model) of the web page, is nonexistent in Node.js.",
+      "Exporting and Importing Modules",
+      "Scripts are supposed to be linked together using a different language (HTML), but dependency management is lacking. CommonJS (http://www.commonjs.org/) and RequireJS (http://requirejs.org/) solve this problem with the AJAX-y approach. Node.js borrowed many things from the CommonJS concept.\nTo export an object in Node.js, use exports.name = object;. An example follows:\n\nvar messages = {\n find: function(req, res, next) {\n ...\n },\n add: function(req, res, next) {\n ...\n },\n format: 'title | date | author'\n}\nexports.messages = messages;",
+      "Node.js Core Modules",
+      "Unlike other programming technologies, Node.js doesn’t come with a heavy standard library. The core modules of node.js are a bare minimum, and the rest can be cherry-picked via the NPM registry. The main core modules, classes, methods, and events include the following:\n•\t http (http://nodejs.org/api/http.html#http_http)\n•\t util (http://nodejs.org/api/util.html)\n•\t querystring (http://nodejs.org/api/querystring.html)\n•\t url (http://nodejs.org/api/url.html)\n•\t fs (http://nodejs.org/api/fs.html)",
+      "http",
+      "http is the main module responsible for the Node.js HTTP server. The main methods are as follows:\n•\t http.createServer(): returns a new web server object\n•\t http.listen(): begins accepting connections on the specified port and hostname\n•\t http.createClient(): is a client and makes requests to other servers\n•\t http.ServerRequest(): passes incoming requests to request handlers\n•\t data: emitted when a part of the message body is received\n•\t end: emitted exactly once for each request\n•\t request.method(): the request method as a string\n•\t request.url(): request URL string\n•\t http.ServerResponse(): creates this object internally by an HTTP server — not by\nthe user— and is used as an output of request handlers\n•\t response.writeHead(): sends a response header to the request\n•\t response.write(): sends a response body\n•\t response.end(): sends and ends a response body",
+      "util",
+      "The util module provides utilities for debugging. One method is as follows:\n•\t util.inspect(): returns a string representation of an object, which is useful for debugging",
+      "querystring",
+      "The querystring module provides utilities for dealing with query strings. Some of the methods include the following:\n•\t querystring.stringify(): serializes an object to a query string\n•\t querystring.parse(): deserializes a query string to an object",
+      "url",
+      "The url module has utilities for URL resolution and parsing. One method is as follows:\n•\t parse(): takes a URL string and returns an object\n",
+      "fs",
+      "fs handles file system operations such as reading to and writing from files. There are synchronous and asynchronous\nmethods in the library. Some of the methods include the following:\n•\t fs.readFile(): reads files asynchronously\n•\t fs.writeFile(): writes data to files asynchronously\nThere is no need to install or download core modules. To include them in your application, all you need is to use\nthe following syntax:\n\nvar http = require('http');"
+    ],
+    "File System and Event Emitters": [
+      "Reading to and Writing from the File System in Node.js",
+      "Reading from files is done via the core fs module (http://nodejs.org/api/fs.html). There are two sets of reading methods: async and sync. In most cases, developers should use async methods, such as fs.readFile:\n\nvar fs = require('fs');\nvar path = require('path');\nfs.readFile(path.join(__dirname, '/data/customers.csv'), {encoding: 'utf-8'}, function (err, data) {\n if (err) throw err;\n console.log(data);\n});\nTo write to the file, execute the following:\nvar fs = require('fs');\nfs.writeFile('message.txt', 'Hello World!', function (err) {\n if (err) throw err;\n console.log('Writing is done.');\n});",
+      "Streaming Data in Node.js",
+      "Streaming data is a phrase that means an application processes the data while it’s still receiving it. This feature is useful for extra large datasets such as video or database migrations.Here’s a basic example of using streams that output the binary file content back:\nvar fs = require('fs');\nfs.createReadStream('./data/customers.csv').pipe(process.stdout);\nBy default, Node.js uses buffers for streams. ",
+      "The Node.js Event emitter",
+      "If you worked with JavaScript in the browser, you know how much of the interaction of the user is handled through events: mouse clicks, keyboard button presses, reacting to mouse movements, and so on.\n\nOn the backend side, Node.js offers us the option to build a similar system using the events module.\n\nThis module, in particular, offers the EventEmitter class, which we'll use to handle our events.\n\nYou initialize that using\n\nconst EventEmitter = require('events')\nconst eventEmitter = new EventEmitter()\n\nThis object exposes, among many others, the on and emit methods.\n\nemit is used to trigger an event\non is used to add a callback function that's going to be executed when the event is triggered\nFor example, let's create a start event, and as a matter of providing a sample, we react to that by just logging to the console:\n\neventEmitter.on('start', () => {\n  console.log('started')\n})\n\nWhen we run\n\neventEmitter.emit('start')\n\nthe event handler function is triggered, and we get the console log.\n\nYou can pass arguments to the event handler by passing them as additional arguments to emit():\n\neventEmitter.on('start', number => {\n  console.log(`started ${number}`)\n})\n\neventEmitter.emit('start', 23)\n\nMultiple arguments:\n\neventEmitter.on('start', (start, end) => {\n  console.log(`started from ${start} to ${end}`)\n})\n\neventEmitter.emit('start', 1, 100)\n\nThe EventEmitter object also exposes several other methods to interact with events, like\n\n1. once(): add a one-time listener\n2. removeListener() / off(): remove an event listener from an event\n3. removeAllListeners(): remove all listeners for an event"
+    ],
+    "Build HTTP server": [
+     "Hello World HTTP web server",
+      "const http = require('http')\n\nconst port = process.env.PORT\n\nconst server = http.createServer((req, res) => {\n  res.statusCode = 200\n  res.setHeader('Content-Type', 'text/html')\n  res.end('<h1>Hello, World!</h1>')\n})\n\nserver.listen(port, () => {\n  console.log(`Server running at port ${port}`)\n})",
+      "Let's analyze it briefly. We include the http module.\n\nWe use the module to create an HTTP server.\n\nThe server is set to listen on the specified port, 3000. When the server is ready, the listen callback function is called.\n\nThe callback function we pass is the one that's going to be executed upon every request that comes in. Whenever a new request is received, the request event is called, providing two objects: a request (an http.IncomingMessage object) and a response (an http.ServerResponse object).\n\nrequest provides the request details. Through it, we access the request headers and request data.\n\nresponse is used to populate the data we're going to return to the client.\n\nIn this case with\n\nres.statusCode = 200\nwe set the statusCode property to 200, to indicate a successful response.\n\nWe also set the Content-Type header:\n\nres.setHeader('Content-Type', 'text/plain')\nand we end close the response, adding the content as an argument to end():\n\nres.end('Hello World\\n')"
+    ],
+    "Making HTTP requests": [
+      "Perform a GET Request",
+      "const https = require('https')\nconst options = {\n  hostname: 'whatever.com',\n  port: 443,\n  path: '/todos',\n  method: 'GET'\n}\n\nconst req = https.request(options, res => {\n  console.log(`statusCode: ${res.statusCode}`)\n\n  res.on('data', d => {\n    process.stdout.write(d)\n  })\n})\n\nreq.on('error', error => {\n  console.error(error)\n})\n\nreq.end()",
+      "",
+      "Perform a POST Request",
+      "const https = require('https')\n\nconst data = JSON.stringify({\n  todo: 'Buy the milk'\n})\n\nconst options = {\n  hostname: 'whatever.com',\n  port: 443,\n  path: '/todos',\n  method: 'POST',\n  headers: {\n    'Content-Type': 'application/json',\n    'Content-Length': data.length\n  }\n}\n\nconst req = https.request(options, res => {\n  console.log(`statusCode: ${res.statusCode}`)\n\n  res.on('data', d => {\n    process.stdout.write(d)\n  })\n})\n\nreq.on('error', error => {\n  console.error(error)\n})\n\nreq.write(data)\nreq.end()",
+      "",
+      "PUT and DELETE",
+      "const options = {\n  hostname: 'whatever.com',\n  port: 443,\n  path: '/todos',\n  method: 'PUT',\n  headers: {\n    'Content-Type': 'application/json',\n    'Content-Length': data.length\n  }\n}\n",
+      "PUT and DELETE requests use the same POST request format, and just change the options.method value."
+    ],
+    "Make an HTTP POST using axios": [
+      "Http Request using axios",
+      "const axios = require('axios')\n\naxios\n  .post('https://whatever.com/todos', {\n    todo: 'Buy the milk'\n  })\n  .then(res => {\n    console.log(`statusCode: ${res.statusCode}`)\n    console.log(res)\n  })\n  .catch(error => {\n    console.error(error)\n  })",
+      "There are many ways to perform an HTTP POST request in Node.js, depending on the abstraction level you want to use.\n\nThe simplest way to perform an HTTP request using Node.js is to use the Axios library:",
+      "Another way is to use the Request library:",
+      "const request = require('request')\n\nrequest.post(\n  'https://whatever.com/todos',\n  {\n    json: {\n      todo: 'Buy the milk'\n    }\n  },\n  (error, res, body) => {\n    if (error) {\n      console.error(error)\n      return\n    }\n    console.log(`statusCode: ${res.statusCode}`)\n    console.log(body)\n  }\n)",
+      "The 2 ways highlighted up to now require the use of a 3rd party library.\n\nA POST request is possible just using the Node.js standard modules, although it's more verbose than the two preceding options:",
+      "",
+      "const https = require('https')\n\nconst data = JSON.stringify({\n  todo: 'Buy the milk'\n})\n\nconst options = {\n  hostname: 'whatever.com',\n  port: 443,\n  path: '/todos',\n  method: 'POST',\n  headers: {\n    'Content-Type': 'application/json',\n    'Content-Length': data.length\n  }\n}\n\nconst req = https.request(options, res => {\n  console.log(`statusCode: ${res.statusCode}`)\n\n  res.on('data', d => {\n    process.stdout.write(d)\n  })\n})\n\nreq.on('error', error => {\n  console.error(error)\n})\n\nreq.write(data)\nreq.end()"
+    ],
+    "Get HTTP request body data": [
+      "Body-parser Node.js module",
+      "const axios = require('axios')\n\naxios.post('https://whatever.com/todos', {\n  todo: 'Buy the milk'\n})",
+      "Here is how you can extract the data that was sent as JSON in the request body.\n\nIf you are using Express, that's quite simple: use the body-parser Node.js module.",
+      "server-side code:",
+      "const bodyParser = require('body-parser')\n\napp.use(\n  bodyParser.urlencoded({\n    extended: true\n  })\n)\n\napp.use(bodyParser.json())\n\napp.post('/endpoint', (req, res) => {\n  console.log(req.body.todo)\n})",
+      "If you're not using Express and you want to do this in vanilla Node.js, you need to do a bit more work, of course, as Express abstracts a lot of this for you.\n\nThe key thing to understand is that when you initialize the HTTP server using http.createServer(), the callback is called when the server got all the HTTP headers, but not the request body.\n\nThe request object passed in the connection callback is a stream.\n\nSo, we must listen for the body content to be processed, and it's processed in chunks.\n\nWe first get the data by listening to the stream data events, and when the data ends, the stream end event is called, once:\n\nconst server = http.createServer((req, res) => {\n  // we can access HTTP headers\n  req.on('data', chunk => {\n    console.log(`Data chunk available: ${chunk}`)\n  })\n  req.on('end', () => {\n    //end of data\n  })\n})",
+      "So to access the data, we must put it into an array:",
+      "const server = http.createServer((req, res) => {\n  let data = []\n  req.on('data', chunk => {\n    data.push(chunk)\n  })\n  req.on('end', () => {\n    JSON.parse(data).todo // 'Buy the milk'\n  })\n})"
+    ],
+    "File System in nodejs":[
+      "File descriptors in Node.js",
+      "const fs = require('fs')\n\nfs.open('/Users/joe/test.txt', 'r', (err, fd) => {\n  //fd is our file descriptor\n})",
+      "Before you're able to interact with a file that sits in your filesystem, you must get a file descriptor.\n\nA file descriptor is what's returned by opening the file using the open() method offered by the fs module\nNotice the r we used as the second parameter to the fs.open() call.\n\nThat flag means we open the file for reading.\n\nOther flags you'll commonly use are\n\n1. r+ open the file for reading and writing\n2. w+ open the file for reading and writing, positioning the stream at the beginning of the file. The file is created if not existing\n3. a open the file for writing, positioning the stream at the end of the file. The file is created if not existing\n4. a+ open the file for reading and writing, positioning the stream at the end of the file. The file is created if not existing\nYou can also open the file by using the fs.openSync method, which instead of providing the file descriptor object in a callback, it returns it:",
+      "fs.openSync() method",
+      "const fs = require('fs')\n\ntry {\n  const fd = fs.openSync('/Users/joe/test.txt', 'r')\n} catch (err) {\n  console.error(err)\n}",
+      "Once you get the file descriptor, in whatever way you choose, you can perform all the operations that require it, like calling fs.open() and many other operations that interact with the filesystem."
+    ],
+    "More about files in nodejs": [
+      "Node.js file stats",
+      "const fs = require('fs')\nfs.stat('/Users/joe/test.txt', (err, stats) => {\n  if (err) {\n    console.error(err)\n    return\n  }\n\n  stats.isFile() //true\n  stats.isDirectory() //false\n  stats.isSymbolicLink() //false\n  stats.size //1024000 //= 1MB\n})",
+      "Every file comes with a set of details that we can inspect using Node.js.\n\nIn particular, using the stat() method provided by the fs module.\n\nYou call it passing a file path, and once Node.js gets the file details it will call the callback function you pass, with 2 parameters: an error message, and the file stats\n\nThe file information is included in the stats variable. What kind of information can we extract using the stats?\n\nA lot, including:\n1. if the file is a directory or a file, using stats.isFile() and stats.isDirectory()\n2. if the file is a symbolic link using stats.isSymbolicLink()\n3. the file size in bytes using stats.size.",
+      "Node.js File Paths",
+      "const path = require('path')",
+      "Every file in the system has a path.\n\nOn Linux and macOS, a path might look like:\n\n/users/joe/file.txt\n\nwhile Windows computers are different, and have a structure such as:\n\nC:\\users\\joe\\file.txt\n\nYou need to pay attention when using paths in your applications, as this difference must be taken into account.",
+      "Getting information out of a path",
+      "const notes = '/users/joe/notes.txt'\n\npath.dirname(notes) // /users/joe\npath.basename(notes) // notes.txt\npath.extname(notes) // .txt\n\npath.basename(notes, path.extname(notes)) //notes\n\nconst name = 'joe'\npath.join('/', 'users', name, 'notes.txt') //'/users/joe/notes.txt'\n\npath.resolve('joe.txt') //'/Users/joe/joe.txt' if run from my home folder\n\npath.resolve('tmp', 'joe.txt') //'/Users/joe/tmp/joe.txt' if run from my home folder\n\npath.resolve('/etc', 'joe.txt') //'/etc/joe.txt'\n\npath.normalize('/users/joe/..//test.txt') ///users/test.txt\n\n"
+    ],
+    "Reading and Writing file in nodejs": [
+      "Reading Files in Nodejs",
+      "const fs = require('fs')\n\nfs.readFile('/Users/joe/test.txt', (err, data) => {\n  if (err) {\n    console.error(err)\n    return\n  }\n  console.log(data)\n})\n\n\n\nconst fs = require('fs')\n\ntry {\n  const data = fs.readFileSync('/Users/joe/test.txt', 'utf8')\n  console.log(data)\n} catch (err) {\n  console.error(err)\n}",
+      "The simplest way to read a file in Node.js is to use the fs.readFile() method, passing it the file path and a callback function that will be called with the file data\nAlternatively, you can use the synchronous version fs.readFileSync()\nThe default encoding is utf8, but you can specify a custom encoding using a second parameter.\n\nBoth fs.readFile() and fs.readFileSync() read the full content of the file in memory before returning the data.\n\nThis means that big files are going to have a major impact on your memory consumption and speed of execution of the program.\n\nIn this case, a better option is to read the file content using streams.",
+      "Writing Files in Nodejs",
+      "const fs = require('fs')\n\nconst content = 'Some content!'\n\nfs.writeFile('/Users/joe/test.txt', content, err => {\n  if (err) {\n    console.error(err)\n    return\n  }\n  //file written successfully\n})\n\n\n\nconst fs = require('fs')\n\nconst content = 'Some content!'\n\ntry {\n  const data = fs.writeFileSync('/Users/joe/test.txt', content)\n  //file written successfully\n} catch (err) {\n  console.error(err)\n}",
+      "The easiest way to write to files in Node.js is to use the fs.writeFile() API.\nAlternatively, you can use the synchronous version fs.writeFileSync()\nBy default, this API will replace the contents of the file if it does already exist.\n\nYou can modify the default by specifying a flag:\n\nfs.writeFile('/Users/joe/test.txt', content, { flag: 'a+' }, err => {})\n\nThe flags you'll likely use are\n\nr+ open the file for reading and writing\nw+ open the file for reading and writing, positioning the stream at the beginning of the file. The file is created if not existing\na open the file for writing, positioning the stream at the end of the file. The file is created if not existing\na+ open the file for reading and writing, positioning the stream at the end of the file. The file is created if not existing",
+      "Append to a file",
+      "const content = 'Some content!'\n\nfs.appendFile('file.log', content, err => {\n  if (err) {\n    console.error(err)\n    return\n  }\n  //done!\n})",
+      "A handy method to append content to the end of a file is fs.appendFile() (and its fs.appendFileSync() counterpart)"
+    ]
+  }
+]
